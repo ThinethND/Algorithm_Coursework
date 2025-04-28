@@ -3,8 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        String filename = "network.txt"; // Make sure this file exists!
+        String filename = getFileNameFromUser(); // ✨ Ask user for file
 
         try {
             Scanner scanner = new Scanner(new File(filename));
@@ -28,5 +29,11 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Error: Input file not found.");
         }
+    }
+
+    public static String getFileNameFromUser() {
+        Scanner inputScanner = new Scanner(System.in);
+        System.out.print("Enter the full file path or filename (e.g., network.txt): ");
+        return inputScanner.nextLine();
     }
 }
