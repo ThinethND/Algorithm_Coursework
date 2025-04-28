@@ -13,16 +13,13 @@ public class FlowNetwork {
     }
 
     public void addEdge(int from, int to, int capacity) {
-        Edge edge = new Edge(from, to, capacity);
-        adjList[from].add(edge);
+        Edge forwardEdge = new Edge(from, to, capacity);
+        Edge backwardEdge = new Edge(to, from, 0); // Residual edge
+        adjList[from].add(forwardEdge);
+        adjList[to].add(backwardEdge);
     }
 
-    public void printNetwork() {
-        for (int i = 0; i < numNodes; i++) {
-            System.out.println("Node " + i + ":");
-            for (Edge e : adjList[i]) {
-                System.out.println("  " + e);
-            }
-        }
+    public List<Edge> getAdjEdges(int node) {
+        return adjList[node];
     }
 }

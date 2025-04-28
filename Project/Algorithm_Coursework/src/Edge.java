@@ -1,6 +1,5 @@
 public class Edge {
-    int from;
-    int to;
+    int from, to;
     int capacity;
     int flow;
 
@@ -13,10 +12,5 @@ public class Edge {
 
     public int residualCapacity() {
         return capacity - flow;
-    }
-
-    @Override
-    public String toString() {
-        return from + " -> " + to + " | capacity: " + capacity + ", flow: " + flow;
     }
 }

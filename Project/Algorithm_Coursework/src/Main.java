@@ -1,13 +1,15 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String filename = "network.txt"; // Place your test file here
+        String filename = "network.txt"; // Make sure this file exists!
+
         try {
             Scanner scanner = new Scanner(new File(filename));
-            int n = scanner.nextInt();
-            FlowNetwork network = new FlowNetwork(n);
+            int numNodes = scanner.nextInt();
+            FlowNetwork network = new FlowNetwork(numNodes);
 
             while (scanner.hasNextInt()) {
                 int from = scanner.nextInt();
@@ -16,10 +18,15 @@ public class Main {
                 network.addEdge(from, to, capacity);
             }
 
-            network.printNetwork();
+            int source = 0;
+            int sink = numNodes - 1;
+            FordFulkerson ff = new FordFulkerson(network);
+            int maxFlow = ff.maxFlow(source, sink);
+
+            System.out.println("The maximum possible flow is: " + maxFlow);
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
+            System.out.println("Error: Input file not found.");
         }
     }
 }
