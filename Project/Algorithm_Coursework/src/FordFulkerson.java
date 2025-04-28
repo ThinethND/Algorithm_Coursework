@@ -42,6 +42,22 @@ public class FordFulkerson {
                 pathFlow = Math.min(pathFlow, parent[v].residualCapacity());
             }
 
+            // Print the augmenting path
+            List<Integer> path = new ArrayList<>();
+            for (int v = sink; v != source; v = parent[v].from) {
+                path.add(v);
+            }
+            path.add(source);
+            Collections.reverse(path);
+            System.out.print("Augmented path: ");
+            for (int i = 0; i < path.size(); i++) {
+                System.out.print(path.get(i));
+                if (i != path.size() - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+            System.out.println(" | Flow added: " + pathFlow);
+
             // Update flows along the path
             for (int v = sink; v != source; v = parent[v].from) {
                 Edge e = parent[v];
@@ -54,7 +70,6 @@ public class FordFulkerson {
                 }
             }
 
-            System.out.println("Augmented path added with flow: " + pathFlow);
             flow += pathFlow;
         }
         return flow;
