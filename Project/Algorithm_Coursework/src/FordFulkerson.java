@@ -35,6 +35,8 @@ public class FordFulkerson {
 
     public int maxFlow(int source, int sink) {
         int flow = 0;
+        int augmentingPathCount = 0; // ✨ new counter
+
         while (dfs(source, sink)) {
             // Find bottleneck (minimum residual capacity)
             int pathFlow = Integer.MAX_VALUE;
@@ -71,7 +73,10 @@ public class FordFulkerson {
             }
 
             flow += pathFlow;
+            augmentingPathCount++; // ✨ increase counter
         }
+
+        System.out.println("\nTotal augmenting paths found: " + augmentingPathCount); // ✨ print total
         return flow;
     }
 }
