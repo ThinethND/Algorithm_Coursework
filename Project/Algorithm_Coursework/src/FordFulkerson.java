@@ -1,3 +1,9 @@
+/**
+ * Student Name: Diluksha Nimshan Munasinghe
+ * Student ID UoW: w2052877
+ * Student ID IIT: 20230020
+ */
+
 import java.util.*;
 
 public class FordFulkerson {
@@ -5,11 +11,11 @@ public class FordFulkerson {
     private Edge[] parent;
     private FlowNetwork network;
 
-    public FordFulkerson(FlowNetwork network) {
+    public FordFulkerson(FlowNetwork network) { // constructor for initializes the network
         this.network = network;
     }
 
-    private boolean dfs(int source, int sink) {
+    private boolean dfs(int source, int sink) {  // Find augmenting paths from using DFS algorithms
         visited = new boolean[network.numNodes];
         parent = new Edge[network.numNodes];
         Stack<Integer> stack = new Stack<>();
@@ -19,7 +25,7 @@ public class FordFulkerson {
         while (!stack.isEmpty()) {
             int current = stack.pop();
             for (Edge edge : network.getAdjEdges(current)) {
-                if (!visited[edge.to] && edge.residualCapacity() > 0) {
+                if (!visited[edge.to] && edge.residualCapacity() > 0) { // only visit unvisited nodes
                     visited[edge.to] = true;
                     parent[edge.to] = edge;
                     stack.push(edge.to);
@@ -32,13 +38,13 @@ public class FordFulkerson {
         return false;
     }
 
-    // ✨ Added printPath boolean parameter
-    public int maxFlow(int source, int sink, boolean printPath) {
+
+    public int maxFlow(int source, int sink, boolean printPath) { // Find the maximum flow using Ford Fulkerson algorithms
         int flow = 0;
         int augmentingPathCount = 0;
 
         while (dfs(source, sink)) {
-            int pathFlow = Integer.MAX_VALUE;
+            int pathFlow = Integer.MAX_VALUE;  // Find the bottleneck capacity
             for (int v = sink; v != source; v = parent[v].from) {
                 pathFlow = Math.min(pathFlow, parent[v].residualCapacity());
             }
@@ -62,7 +68,7 @@ public class FordFulkerson {
                 System.out.println("Flow added: " + pathFlow);
             }
 
-            for (int v = sink; v != source; v = parent[v].from) {
+            for (int v = sink; v != source; v = parent[v].from) { // Update forward and backward edges with new flow
                 Edge e = parent[v];
                 e.flow += pathFlow;
                 for (Edge back : network.getAdjEdges(e.to)) {
@@ -76,7 +82,7 @@ public class FordFulkerson {
             flow += pathFlow;
             augmentingPathCount++;
         }
-
+        // print the  total number of augmenting paths
         System.out.println("\nTotal augmenting paths found: " + augmentingPathCount);
         return flow;
     }
