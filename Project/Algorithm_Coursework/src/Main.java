@@ -5,7 +5,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        String filename = getFileNameFromUser(); // ✨ Ask user for file
+        String filename = getFileNameFromUser();
+
+
+        boolean printPaths = false; // set to false if you don't want to print augmenting paths
 
         try {
             Scanner scanner = new Scanner(new File(filename));
@@ -22,7 +25,7 @@ public class Main {
             int source = 0;
             int sink = numNodes - 1;
             FordFulkerson ff = new FordFulkerson(network);
-            int maxFlow = ff.maxFlow(source, sink);
+            int maxFlow = ff.maxFlow(source, sink, printPaths); //  Pass the boolean
 
             System.out.println("The maximum possible flow is: " + maxFlow);
 
